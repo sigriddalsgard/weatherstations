@@ -1,0 +1,51 @@
+{
+  "version": 1,
+  "offset": 0,
+  "schema": [
+    {
+      "name": "climate",
+      "namespace": "weatherstations",
+      "id": 0,
+      "type": 1,
+      "version": 1,
+      "versionField": null,
+      "indexes": [],
+      "schema": "@weatherstations/climate",
+      "derived": false,
+      "key": [
+        "timestamp"
+      ],
+      "trigger": null
+    },
+    {
+      "name": "wind",
+      "namespace": "weatherstations",
+      "id": 1,
+      "type": 1,
+      "version": 1,
+      "versionField": null,
+      "indexes": [],
+      "schema": "@weatherstations/wind",
+      "derived": false,
+      "key": [
+        "timestamp"
+      ],
+      "trigger": null
+    },
+    {
+      "name": "station",
+      "namespace": "weatherstations",
+      "id": 2,
+      "type": 1,
+      "version": 1,
+      "versionField": null,
+      "indexes": [],
+      "schema": "@weatherstations/station",
+      "derived": false,
+      "key": [
+        "name"
+      ],
+      "trigger": null
+    }
+  ]
+}

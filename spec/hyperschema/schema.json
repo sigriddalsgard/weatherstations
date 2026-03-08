@@ -1,0 +1,89 @@
+{
+  "version": 1,
+  "schema": [
+    {
+      "name": "climate",
+      "namespace": "weatherstations",
+      "compact": false,
+      "flagsPosition": -1,
+      "fields": [
+        {
+          "name": "timestamp",
+          "required": true,
+          "type": "date",
+          "version": 1
+        },
+        {
+          "name": "temperature",
+          "required": true,
+          "type": "float64",
+          "version": 1
+        },
+        {
+          "name": "humidity",
+          "required": true,
+          "type": "uint",
+          "version": 1
+        },
+        {
+          "name": "name",
+          "required": true,
+          "type": "string",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "name": "wind",
+      "namespace": "weatherstations",
+      "compact": true,
+      "flagsPosition": -1,
+      "fields": [
+        {
+          "name": "timestamp",
+          "required": true,
+          "type": "date",
+          "version": 1
+        },
+        {
+          "name": "speed",
+          "required": true,
+          "type": "float64",
+          "version": 1
+        },
+        {
+          "name": "direction",
+          "required": true,
+          "type": "string",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "name": "station",
+      "namespace": "weatherstations",
+      "compact": true,
+      "flagsPosition": -1,
+      "fields": [
+        {
+          "name": "name",
+          "required": true,
+          "type": "string",
+          "version": 1
+        },
+        {
+          "name": "lat",
+          "required": true,
+          "type": "float64",
+          "version": 1
+        },
+        {
+          "name": "lon",
+          "required": true,
+          "type": "float64",
+          "version": 1
+        }
+      ]
+    }
+  ]
+}

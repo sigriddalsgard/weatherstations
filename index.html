@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Vejrdata</title>
+</head>
+<body>
+  <div id="plot"></div>
+  <script type="module">
+    import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7/+esm'
+
+    const width = 600
+    const height = 450
+    const marginLeft = 100
+    const marginRight = 20
+    const marginTop = 100
+    const marginBottom = 40
+
+    const svg = d3.create('svg')
+      .attr('width', width)
+      .attr('height', height)
+
+    const x = d3.scaleTime()
+      .range([marginLeft, width - marginRight])
+    const y = d3.scaleLinear()
+      .range([height - marginBottom, marginTop])
+
+    const xAxis = svg.append('g')
+      .attr('transform', `translate(0,${height - marginBottom})`)
+
+    const yAxis = svg.append('g')
+      .attr('transform', `translate(${marginLeft},0)`)
+
+    const path = svg.append('path')
+      .attr('fill', 'none')
+      .attr('stroke', 'steelblue')
+      .attr('stroke-width', 2)
+
+    const dots = svg.append('g')
+
+    const xText = svg.append('text')
+      .attr('x', (marginLeft + width - marginRight) / 2)
+      .attr('y', height)
+      .attr('text-anchor', 'middle')
+      .text('Time (seconds)')
+
+    const yText = svg.append('text')
+      .attr('text-anchor', 'middle')
+      .attr('transform', `translate(60, ${(marginTop + height - marginBottom) / 2}) rotate(-90)`)
+      .text('Temperature in celsius')
+
+    document.getElementById('plot').appendChild(svg.node())
+
+    function plot(data) {
+      const t = svg.transition().duration(800)
+
+      x.domain(d3.extent(data, d => new Date(d.timestamp)))
+      y.domain([0, d3.max(data, d => d.temperature)]).nice()
+
+      xAxis.transition(t)
+        .call(d3.axisBottom(x)
+          .tickValues(data.map(d => new Date(d.timestamp)))
+          .tickFormat(d3.timeFormat('%H:%M:%S')))
+      yAxis.transition(t)
+        .call(d3.axisLeft(y))
+
+      path.transition(t)
+        .attr('d', d3.line()
+          .x(d => x(new Date(d.timestamp)))
+          .y(d => y(d.temperature))
+          (data)
+        )
+
+      dots.selectAll('circle')
+        .data(data)
+        .join('circle')
+          .transition(t)
+          .attr('cx', d => x(new Date(d.timestamp)))
+          .attr('cy', d => y(d.temperature))
+          .attr('fill', 'steelblue')
+          .attr('r', 4)
+    }
+
+    setInterval(async () => {
+      const data = await fetch('/data').then(r => r.json())
+      plot(data)
+    }, 1000)
+
+  </script>
+</body>
+</html>
